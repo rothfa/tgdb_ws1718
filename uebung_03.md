@@ -23,7 +23,11 @@ Erstelle eine `INNER JOIN` (optional `WHERE`) Abfrage um die Beziehungen zwische
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT p.providername AS "Anbieter", gs.street AS "Straße", a.plz AS "PLZ", a.city AS "Ort", c.country_name AS "Land", c.duty AS "Steuer"
+FROM gas_station gs
+INNER JOIN address a ON (gs.address_ID = a.address_ID)
+INNER JOIN country c ON (c.country_id = gs.country_ID)
+INNER JOIN provider p ON (gs.provider_ID = p.provider_ID);
 ```
 
 ### Aufgabe 2
