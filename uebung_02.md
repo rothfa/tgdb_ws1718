@@ -119,7 +119,20 @@ Verknüpfe das aus Aufgabe 12 erstellte neue Auto mit deinem neuen Benutzer aus 
 #### Lösung
 ```sql
 INSERT INTO ACC_VEHIC VALUES((SELECT MAX (ACC_VEHIC_ID) FROM ACC_VEHIC) + 1, 10, 14, 'TR:FR:5000', 'FAPLEVEL', 20000, 30000, 15000, 80000, '08-AUG-2013', null, 1, SYSDATE, SYSDATE);
+INSERT INTO RECEIPT
+Values ((SELECT MAX (RECEIPT_ID)+1 FROM RECEIPT),
+(SELECT ACCOUNT_ID FROM ACCOUNT WHERE email = 'rothfa@hochschule-trier'),
+(SELECT MAX(acc_vehic_id)+1 FROM ACC_VEHIC),
+0.18,
+(SELECT gas_id FROM GAS WHERE GAS_NAME = 'Benzin 95'),
+(SELECT MAX(Gas_STATION_ID)+1 FROM GAS_STATION,
+1.32,
+657.2,
+45.78,
+SYSDATE,
+SYSDATE); 
 ```
+###Nachschauen!
 
 ### Aufgabe 14
 Ändere den Vorname `SURNAME` des Datensatzes mit der ID `7` in der Tabelle `ACCOUNT` auf `Zimmermann`.
