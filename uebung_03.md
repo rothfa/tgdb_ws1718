@@ -35,7 +35,11 @@ Suche alle Tankstellen raus, deren Straßenname an zweiter Stelle ein `U` haben 
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT p.provider_name 
+FROM gas_station gs
+INNER JOIN provider p ON (gs.provider_id = p.provider_ID)
+WHERE gs.street LIKE '_u%'
+OR gs.street LIKE '_U%';
 ```
 
 ### Aufgabe 3
