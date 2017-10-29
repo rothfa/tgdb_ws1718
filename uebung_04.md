@@ -13,11 +13,19 @@
 ## Aufgaben
 
 ### Aufgabe 1
-Um genauere Informationen und Prognosen mit Data Mining Werkzeugen zu schöpfen, ist es notwendig mehr Informationen über die registrierten Benutzer zu sammeln und zu speichern. Die in Zukunft gesammelten Informationen sollen in neuen Tabellen des bestehenden Datenbankmodells gespeichert werden. Dazu soll jedem Benutzer einen Erst- und Zweitwohnsitz zugeordnet werden. Jeder Wohnsitz besitzt eine eigene Adresse. Integriere in das bestehende Datenbankmodell Tabellen die den genauen Erst- und Zweitwohnsitz abbilden können. Beachte dazu die Normalisierungsformen bis 3NF - [Dokumentation](https://de.wikipedia.org/wiki/Normalisierung_(Datenbank)). Wie lautet deine SQL-Syntax um deine Erweiterung des Datenbankmodells zu implementieren?
+Um genauere Informationen und Prognosen mit Data Mining Werkzeugen zu schöpfen, 
+ist es notwendig mehr Informationen über die registrierten Benutzer zu sammeln und zu speichern. 
+Die in Zukunft gesammelten Informationen sollen in neuen Tabellen des bestehenden Datenbankmodells gespeichert werden. 
+Dazu soll jedem Benutzer einen Erst- und Zweitwohnsitz zugeordnet werden. Jeder Wohnsitz besitzt eine eigene Adresse. 
+Integriere in das bestehende Datenbankmodell Tabellen die den genauen Erst- und Zweitwohnsitz abbilden können. Beachte dazu die Normalisierungsformen bis 3NF - [Dokumentation](https://de.wikipedia.org/wiki/Normalisierung_(Datenbank)). Wie lautet deine SQL-Syntax um deine Erweiterung des Datenbankmodells zu implementieren?
 
 #### Lösung
 ```sql
-Deine Lösung
+CREATE TABLE residence
+(residence_id       NUMBER(5)     NOT NULL, 
+PLZ       NUMBER(5)   NOT NULL, 
+City      VARCHAR2    NOT NULL, 
+Street     NUMBER(15,2);
 ```
 
 ### Aufgabe 2
@@ -25,7 +33,9 @@ Als App Entwickler/in für Android und iOS möchtest du dich nicht darauf verlas
 
 #### Lösung
 ```sql
-Deine Lösung
+ALTER TABLE gas_station 
+ADD (xcoordinate Number(8,15), ycoodinate Number(8,15));
+
 ```
 
 ### Aufgabe 3
@@ -33,7 +43,10 @@ Welche Kunden haben im Jahr 2017 mehr als den Durchschnitt getank?
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT AVG(LITER)
+FROM RECEIPT
+WHERE RECEIPT_DATE = ;
+
 ```
 
 ### Aufgabe 4
@@ -42,25 +55,34 @@ Ermittle, warum du INSERT-Rechte auf die Tabelle `SCOTT.EMP` und UPDATE-Rechte a
 #### Aufgabe 4.1
 Wurden die Tabellen-Rechte direkt an dich bzw. an `PUBLIC` vergeben?
 
+
+
 ##### Lösung
 ```sql
-Deine Lösung
+SELECT * FROM all_tab_privs where table_schema = 'SCOTT' and table_Name = 'EMP';
+SELECT * FROM all_tab_privs where table_schema = 'SCOTT' and table_Name = 'DEPT';
 ```
+1. no rows selected
+2. Wurden direkt an Public gegeben! (update)
 
 #### Aufgabe 4.2
 Welche Rollen besitzt du direkt?
 
+FH-Trier
+
 ##### Lösung
 ```sql
-Deine Lösung
+SELECT * FROM USER_ROLE_PRIVS;
 ```
 
 #### Aufgabe 4.3
 Welche Rollen haben die Rollen?
 
+FH-Trier -> WI_STUDENT
+
 ##### Lösung
 ```sql
-Deine Lösung
+select * from role_role_privs;
 ```
 
 #### Aufgabe 4.4
@@ -68,7 +90,7 @@ Haben die Rollen Rechte an `SCOTT.EMP` oder `SCOTT.DEPT`?
 
 ##### Lösung
 ```sql
-Deine Lösung
+SELECT * FROM role_role_privs where table_schema = 'SCOTT' and table_Name = 'DEPT';
 ```
 
 ### Aufgabe 5
@@ -83,7 +105,7 @@ Es soll für jede Tankstelle der Umsatz einzelner Jahre aufgelistet werden auf B
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT 
 ```
 
 

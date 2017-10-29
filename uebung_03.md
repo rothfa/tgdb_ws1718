@@ -23,7 +23,7 @@ Erstelle eine `INNER JOIN` (optional `WHERE`) Abfrage um die Beziehungen zwische
 
 #### Lösung
 ```sql
-SELECT p.providername AS "Anbieter", gs.street AS "Straße", a.plz AS "PLZ", a.city AS "Ort", c.country_name AS "Land", c.duty AS "Steuer"
+SELECT p.provider_name AS "Anbieter", gs.street AS "Straße", a.plz AS "PLZ", a.city AS "Ort", c.country_name AS "Land", c.duty_amount AS "Steuer"
 FROM gas_station gs
 INNER JOIN address a ON (gs.address_ID = a.address_ID)
 INNER JOIN country c ON (c.country_id = gs.country_ID)
@@ -47,7 +47,14 @@ Suche alle Tankstellen raus, die sich in Trier befinden.
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT * FROM GAS_STATION WHERE ADDRESS_ID = 1 OR ADDRESS_ID = 2 OR ADDRESS_ID = 6 OR ADDRESS_ID = 11 OR ADDRESS_ID = 11;
+
+SELECT p.provider_name AS "Anbieter", gs.street AS "Straße", a.plz AS "PLZ", a.city AS "Ort", c.country_name AS "Land", c.duty_amount AS "Steuer"
+FROM gas_station gs
+INNER JOIN address a ON (gs.address_ID = a.address_ID)
+INNER JOIN country c ON (c.country_id = gs.country_ID)
+INNER JOIN provider p ON (gs.provider_ID = p.provider_ID)
+WHERE  a.city = 'TRIER';
 ```
 
 #### Aufgabe 4
@@ -55,11 +62,27 @@ Füge eine fiktive Tankstelle hinzu. Sie darf auf keine bestehenden Informatione
 
 #### Lösung
 ```sql
-Deine Lösung
+-- Address
+INSERT INTO ADDRESS
+VALUES ((SELECT MAX (ADDRESS_ID) FROM ADDRESS) + 1, '54313', 'ZEMMER');
+-- Country
+INSERT INTO COUNTRY
+VALUES ((SELECT MAX (COUNTRY_ID) FROM COUNTRY) + 1, 'Deutschland', 0.22);
+-- Provider
+INSERT INTO Provider
+VALUES ((SELECT MAX (Provider_ID) FROM Provider) + 1, 'BQ');
+-- Provider
+INSERT INTO GAS_STATION
+VALUES ((SELECT MAX (GAS_STATION_ID) FROM GAS_STATION) + 1,
+(SELECT PROVIDER_ID FROM PROVIDER WHERE PROVIDER_NAME = 'BQ'),
+(SELECT COUNTRY_ID FROM COUNTRY WHERE COUNTRY_NAME = 'Deutschland'),
+(SELECT ADDRESS_ID FROM ADDRESS WHERE CITY = 'ZEMMER');
+
 ```
 
 ### Aufgabe 5
-Erstelle eine INNER JOIN (optional `WHERE`) Abfrage um die Beziehung zwischen den Tabellen `ACCOUNT`, `VEHICLE`, `VEHICLE_TYPE`, `GAS` und `PRODUCER` aufzulösen und zeige die Spalten `FORNAME`, `SURNAME`, `VEHICLE_TYPE_NAME`, `VERSION`, `BUILD_YEAR`, `PRODUCER_NAME` und `GAS_NAME` an. Richte SQL-Plus so ein, dass möglicht jeder Datensatz nur eine Zeile belegt.
+Erstelle eine INNER JOIN (optional `WHERE`) Abfrage um die Beziehung zwischen den Tabellen `ACCOUNT`, `VEHICLE`, `VEHICLE_TYPE`, `GAS` und `PRODUCER` aufzulösen 
+und zeige die Spalten `FORNAME`, `SURNAME`, `VEHICLE_TYPE_NAME`, `VERSION`, `BUILD_YEAR`, `PRODUCER_NAME` und `GAS_NAME` an. Richte SQL-Plus so ein, dass möglicht jeder Datensatz nur eine Zeile belegt.
 
 * COLUMN <SPALTENNAME> FORMAT a<Zeichenlänge>
 * COLUMN <SPALTENNAME> FORMAT <Zahlenlänge, pro Länge eine 9>
@@ -68,7 +91,9 @@ Erstelle eine INNER JOIN (optional `WHERE`) Abfrage um die Beziehung zwischen de
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT account.forname, account.surname, vehicle_type.vehicle_type_name, vehicle.version, vehicle.build_year, producer.producer_name, gas.gas_name
+FROM vehicle 
+INNER JOIN vehicle.id 
 ```
 
 ### Aufgabe 6
