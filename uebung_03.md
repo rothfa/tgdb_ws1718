@@ -91,9 +91,10 @@ und zeige die Spalten `FORNAME`, `SURNAME`, `VEHICLE_TYPE_NAME`, `VERSION`, `BUI
 
 #### Lösung
 ```sql
-SELECT account.forname, account.surname, vehicle_type.vehicle_type_name, vehicle.version, vehicle.build_year, producer.producer_name, gas.gas_name
-FROM vehicle 
-INNER JOIN vehicle.id 
+SELECT a.forname, a.surname, vt.vehicle_type_name, v.version, v.build_year, p.producer_name, g.gas_name
+FROM account a
+INNER JOIN acc_vehic acv ON (a.account_id = acv.account_id)
+INNER JOIN vehicle_type vt ON (v.vehicle_type_id = vt.vehicle_type_id)
 ```
 
 ### Aufgabe 6
@@ -101,7 +102,7 @@ Welche Fahrzeuge wurden noch keinem Benutzer zugewiesen? Gebe über das Fahrzeug
 
 #### Lösung
 ```sql
-Deine Lösung
+
 ```
 
 ### Aufgabe 7
@@ -117,7 +118,12 @@ An welcher Tankstelle wurde noch nie getankt? Gebe zu den Tankstellen die Inform
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT p.provider_name AS "Anbieter", gs.street AS "Straße", a.plz AS "PLZ", a.city AS "Ort", c.country_name AS "Land", c.duty_amount AS "Steuer"
+FROM gas_station gs
+INNER JOIN address a ON (gs.address_ID = a.address_ID)
+INNER JOIN country c ON (c.country_id = gs.country_ID)
+INNER JOIN provider p ON (gs.provider_ID = p.provider_ID)
+WHERE gs.gas_station_id NOT IN (SELECT gas_station_id FROM RECEIPT);
 ```
 
 ### Aufgabe 9
@@ -141,7 +147,11 @@ Wie viele Benutzer haben einen LKW registriert?
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT COUNT (account_id) as "Anzahl LKW"
+FROM ACC_VEHIC acv
+INNER JOIN Vehicle v ON (acv.vehicle_id = v.vehicle_id)
+INNER JOIN vehicle_type vt ON (v.vehicle_type_id = vt.vehicle_type_id)
+WHERE vt.vehicle_type_name = 'LKW';
 ```
 
 ### Aufgabe 12
@@ -165,7 +175,11 @@ Aktualisiere den Steuersatz aller Belege auf den Steuersatz des Landes, indem di
 
 #### Lösung
 ```sql
-Deine Lösung
+UPDATE RECEIPT r
+SET DUTY_AMOUNT = (SELECT c.DUTY_AMOUNT FROM COUNTRY c
+INNER JOIN gas_station gs ON (c.country_id = gs.country_id) )
+WHERE gs.gas_station_id = r.gas_station_id;
+
 ```
 
 
