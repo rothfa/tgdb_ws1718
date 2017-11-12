@@ -17,10 +17,12 @@
 
 ### Aufgabe 1
 Wie heißt der Primary Key Contraint der Tabelle `VEHICLE` und für welche Spalten wurde er angelegt?
-
+constraint_name,constraint_type, search_condition
 #### Lösung
 ```sql
-Deine Lösung
+select constraint_name,constraint_type, search_condition, r_owner, r_constraint_name
+from user_constraints
+where table_name = 'VEHICLE' AND Constraint_type = 'P';
 ```
 
 ### Aufgabe 2
@@ -28,7 +30,9 @@ Für welche Spalte**n** der Tabelle `ACC_VEHIC` wurde ein Foreign Key angelegt u
 
 #### Lösung
 ```sql
-Deine Lösung
+select constraint_name,constraint_type, search_condition, r_owner, r_constraint_name
+from user_constraints
+where table_name = 'ACC_VEHIC' AND Constraint_type = 'R';
 ```
 
 ### Aufgabe 3
@@ -36,7 +40,9 @@ Erstelle einen Check Constraint für die Tabelle `ACCOUNT`, dass der Wert der Sp
 
 #### Lösung
 ```sql
-Deine Lösung
+ALTER TABLE ACCOUNT ADD CONSTRAINT c_date
+CHECK (U_DATE < C_DATE);
+
 ```
 
 ### Aufgabe 4
@@ -44,7 +50,9 @@ Erstelle einen Check Constraint der überprüft, ob der erste Buchstabe der Spal
 
 #### Lösung
 ```sql
-Deine Lösung
+ALTER TABLE GAS ADD CONSTRAINT c_gas_name
+CHECK (gas_name = UPPER(gas_name));
+
 ```
 
 ### Aufgabe 5
@@ -58,7 +66,9 @@ Erstelle einen Check Contraint der überprüft, ob der Wert der Spalte `IDENTICA
 
 #### Lösung
 ```sql
-Deine Lösung
+alter table acc_vehic 
+add constraint c_kennzeichen_etspricht
+check (regexp_like(identicator, '/[A-Z]\{1,3}[:][A-Z]\{1,2}[1-9][0-9]\{0,3}'));
 ```
 
 ### Aufgabe 6 - Wiederholung
@@ -66,7 +76,9 @@ Liste für alle Personen den Verbrauch an Kraftstoff auf (Missachte hier die unt
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT LITER,Surname, Forename, Price_L, kilometer, Price_l*Kilometer AS Preis_SUMME
+FROM RECEIPT
+INNER JOIN ACCOUNT ON (Account.account_id = receipt.account_id);
 ```
 
 ### Aufgabe 7 - Wiederholung
@@ -74,18 +86,33 @@ Liste die Tankstellen absteigend sortiert nach der Kundenanzahl über alle Jahre
 
 #### Lösung
 ```sql
-Deine Lösung
+select gas_station_id
+from gas_station 
+order by gas_station_id desc;
 ```
 
 ### Aufgabe 8 - Wiederholung
-Erweitere das Datenbankmodell um ein Fahrtenbuch, sowie es Unternehmen für ihren Fuhrpark führen. Dabei ist relevant, welche Person an welchem Tag ab wie viel Uhr ein Fahrzeug für die Reise belegt, wie viele Kilometer zurück gelegt wurden und wann die Person das Fahrzeug wieder abgibt.
+Erweitere das Datenbankmodell um ein Fahrtenbuch, sowie es Unternehmen für ihren Fuhrpark führen. Dabei ist relevant, welche Person an welchem Tag
+ab wie viel Uhr ein Fahrzeug für die Reise belegt, 
+wie viele Kilometer zurück gelegt wurden und wann die Person das Fahrzeug wieder abgibt.
 
 Berücksichtige bitte jegliche Constraints!
 
 #### Lösung
 ```sql
-Deine Lösung
+CREATE TABLE Fahrtenbuch
+(Account_name NUMBER(38) NOT NULL, 
+BEGINN_UHRZEIT time('HH:MM:SS') NOT NULL,
+BEGINN_DATE date('YYYY-MM-DD') NOT NULL,
+ENDE_UHRZEIT time('HH:MM:SS') NOT NULL,
+END_DATE date('YYYY-MM-DD') NOT NULL,
+FOREIGN KEY(Account_name) REFERENCES ACCOUNT(ACCOUNT_ID));
+
+INSERT INTO Fahrtenbuch (Account_name ,BEGINN_UHRZEIT, BEGINN_DATE,ENDE_UHRZEIT,END_DATE) 
+VALUES	();
 ```
+
+
 
 
 
