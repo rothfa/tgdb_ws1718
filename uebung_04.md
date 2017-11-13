@@ -26,7 +26,6 @@ CREATE TABLE residence
 PLZ       NUMBER(5)   NOT NULL, 
 City      VARCHAR2    NOT NULL, 
 Street     NUMBER(15,2);
-```
 
 ### Aufgabe 2
 Als App Entwickler/in für Android und iOS möchtest du dich nicht darauf verlassen, dass die Adresse exakt richtig ist und überlegst in dem Datenbankmodell noch zwei zusätzliche Attribute (X und Y Koordinate) zur genauen GPS Lokalisierung einer Tankstelle aufzunehmen. Wie lautet deine SQL-Syntax um das Datenbankmodell auf die zwei Attribute zu erweitern?
@@ -35,7 +34,6 @@ Als App Entwickler/in für Android und iOS möchtest du dich nicht darauf verlas
 ```sql
 ALTER TABLE gas_station 
 ADD (xcoordinate Number(8,15), ycoodinate Number(8,15));
-
 ```
 
 ### Aufgabe 3
@@ -46,7 +44,6 @@ Welche Kunden haben im Jahr 2017 mehr als den Durchschnitt getank?
 SELECT AVG(LITER)
 FROM RECEIPT
 WHERE RECEIPT_DATE = ;
-
 ```
 
 ### Aufgabe 4
@@ -55,20 +52,14 @@ Ermittle, warum du INSERT-Rechte auf die Tabelle `SCOTT.EMP` und UPDATE-Rechte a
 #### Aufgabe 4.1
 Wurden die Tabellen-Rechte direkt an dich bzw. an `PUBLIC` vergeben?
 
-
-
 ##### Lösung
 ```sql
 SELECT * FROM all_tab_privs where table_schema = 'SCOTT' and table_Name = 'EMP';
 SELECT * FROM all_tab_privs where table_schema = 'SCOTT' and table_Name = 'DEPT';
 ```
-1. no rows selected
-2. Wurden direkt an Public gegeben! (update)
 
 #### Aufgabe 4.2
 Welche Rollen besitzt du direkt?
-
-FH-Trier
 
 ##### Lösung
 ```sql
@@ -77,8 +68,6 @@ SELECT * FROM USER_ROLE_PRIVS;
 
 #### Aufgabe 4.3
 Welche Rollen haben die Rollen?
-
-FH-Trier -> WI_STUDENT
 
 ##### Lösung
 ```sql

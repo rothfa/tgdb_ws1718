@@ -18,10 +18,33 @@ Erstelle mit Dia oder einem anderen Werkzeug eine Abbilung der Mengen, die durch
 #### Lösung
 > Deine Lösung
 
+INNER JOIN -> Schnittmenge in der Mitte 
+
+SELECT column_name(s)
+FROM table1
+INNER JOIN table2 ON table1.column_name = table2.column_name;
+
+RIGHT JOIN -> Schnittmenge in der Mitte + Rechter Teil
+
+SELECT column_name(s)
+FROM table1
+RIGHT JOIN table2 ON table1.column_name = table2.column_name;
+
+LEFT JOIN -> Schnittmenge in der Mitte + Linker Teil
+
+SELECT column_name(s)
+FROM table1
+LEFT JOIN table2 ON table1.column_name = table2.column_name;
+
+OUTER JOIN 
+
+Als Spezialfälle des OUTER JOIN gibt es die JOIN-Typen LEFT JOIN, RIGHT JOIN, FULL JOIN.
+
+
 ### Aufgabe 2
 Welche Personen haben kein Fahrzeug? Löse dies einmal mit `LEFT JOIN` und `RIGHT JOIN`.
 
 #### Lösung
 ```sql
-Deine Lösung
+SELECT 
 ```
