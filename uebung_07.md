@@ -44,7 +44,7 @@ DECLARE
   v_account_id account.account_id%TYPE;
   v_surname	 account.surname%TYPE;
   v_forename account.forename%TYPE;
-  v_anzahl acc_vehic.vehicle_id%TYPE;
+  v_anzahl NUMBER(38);
 
   BEGIN
   SELECT a.surname, a.forename, COUNT(av.vehicle_id), MAX(a.account_id) INTO v_surname, v_forename,v_anzahl, v_account_id
@@ -149,6 +149,7 @@ BEGIN
                       INNER JOIN country c ON (gs.country_id = c.country_id)
                     WHERE c.country_name LIKE 'Deutschland') LOOP
     DBMS_OUTPUT.PUT_LINE('++ ' || rec_gs.provider_name || ' ++ ' || rec_gs.street || ' ++ ' || rec_gs.plz || ' ++ ' || rec_gs.city || ' ++ ' || rec_gs.country_name);
+	
   END LOOP;
 END;
 /
@@ -156,7 +157,31 @@ END;
 
 #### Lösung
 ```sql
-Deine Lösung
+DECLARE
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Liste alle Tankstellen aus Deutschland');
+  DBMS_OUTPUT.PUT_LINE('____________________________________________');
+  FOR rec_gs IN (  SELECT p.provider_name, gs.street, a.plz, a.city, c.country_name, gs.gas_station_id
+                    FROM gas_station gs
+                      INNER JOIN address a ON (a.address_id = gs.address_id)
+                      INNER JOIN provider p ON (gs.provider_id = p.provider_id)
+                      INNER JOIN country c ON (gs.country_id = c.country_id)
+                    WHERE c.country_name LIKE 'Deutschland') LOOP
+    DBMS_OUTPUT.PUT_LINE('++ ' || rec_gs.provider_name || ' ++ ' || rec_gs.street || ' ++ ' || rec_gs.plz || ' ++ ' || rec_gs.city || ' ++ ' || rec_gs.country_name);
+	
+	
+	FOR cur_kud IN (  SELECT a.account_id, a.surname, a.forename
+					  FROM receipt r
+                      INNER JOIN account a ON (a.account_id = r.account_id)
+					  WHERE r.gas_station_id = rec_gs.gas_station_id
+					)LOOP
+					  DBMS_OUTPUT.PUT_LINE('____________________________________________');
+    DBMS_OUTPUT.PUT_LINE('++ ' || cur_kud.account_id || ' ++ ' || cur_kud.surname || ' ++ ' || cur_kud.forename);
+	END LOOP;
+	
+  END LOOP;
+END;
+/
 ```
 
 ### Aufgabe 4
